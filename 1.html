@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+    <script  src="vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{test}}
+    </div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            test:"这是一个测试"
+        }
+    })
+
+    // <div id="app">
+    //     这是一个测试
+    //  </div>
+    // // 渲染函数
+    // ƒ anonymous() {
+    //     with(this){
+    //         return _c('div',{attrs:{"id":"app"}},[_v("\n        "+_s(test)+"\n    ")])}
+    // }
+</script>
