@@ -6,7 +6,7 @@
 
 $mount的实现跟构建方式(webpack的vue-loader)有关系,也和平台有关系(weex),
 下面的代码只分析了纯前端浏览器环境下的$mount的实现
-```
+```javascript
     new Vue({
         el:"#app",
         data:{}
