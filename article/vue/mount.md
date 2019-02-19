@@ -1,11 +1,8 @@
 ##  vm.$mount 深入理解Vue的渲染流程
-本节概要
--  $el:"#app" 查找"#app"元素的的过程
--  template 模板查找过程
--  独立构建和运行时构建的区别
 
 $mount的实现跟构建方式(webpack的vue-loader)有关系,也和平台有关系(weex),
 下面的代码只分析了纯前端浏览器环境下的$mount的实现
+
 ```javascript
     new Vue({
         el:"#app",
@@ -28,16 +25,16 @@ $mount的实现跟构建方式(webpack的vue-loader)有关系,也和平台有关
 ![](/images/vue/$mount1.jpg)
 
 开始分析 $mount, 以下是$mount的源码, 省略了部分代码
-```
+```javascript
 var mount = Vue.prototype.$mount;
 Vue.prototype.$mount = function (el, hydrating) {
-    // $el元素的查找过程
+    /* $el元素的查找过程 */
     el = el && query(el);
     if (el === document.body || el === document.documentElement) {
         warn("Do not mount Vue to <html> or <body> - mount to normal elements instead.");
         return this
     }
-    // template的确定过程
+    /*  template的确定过程 */
     var options = this.$options;
     // resolve template/el and convert to render function
     if (!options.render) {
@@ -45,7 +42,7 @@ Vue.prototype.$mount = function (el, hydrating) {
         ...
         if (template) {
             ...
-            // 把template编译成渲染函数
+            /* 把template编译成渲染函数 */
             var ref = compileToFunctions(template, {
                 shouldDecodeNewlines: shouldDecodeNewlines,
                 shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
@@ -60,7 +57,7 @@ Vue.prototype.$mount = function (el, hydrating) {
 };
 ```
 ### $el查找过程
-```
+```javascript
     el = el && query(el);
     if (el === document.body || el === document.documentElement) {
         warn("Do not mount Vue to <html> or <body> - mount to normal elements instead.");
@@ -68,7 +65,7 @@ Vue.prototype.$mount = function (el, hydrating) {
     }
 ```
 调用了query(el)
-```
+```javascript
 function query(el) {
     if (typeof el === 'string') {
         var selected = document.querySelector(el);
@@ -76,7 +73,7 @@ function query(el) {
             warn('Cannot find element: ' + el);
             return document.createElement('div')
         }
-        return selected  //返回
+        return selected
     } else {
         return el
     }
@@ -89,21 +86,20 @@ query函数的主要作用是:
 可以看出对el进行了很多的限制, 不能挂在到html上和body上.
 
 ### 检测template 是否配置
-```
+```javascript
 var mount = Vue.prototype.$mount;
 Vue.prototype.$mount = function (el, hydrating) {
     ...
     var options = this.$options;
-    // resolve template/el and convert to render function
-    if (!options.render) {     //没有配置render函数
+    /*  没有配置render函数  */
+    if (!options.render) {
         var template = options.template;
-        if (template) {   //确定template模板存在
+        if (template) {  /*template模板是否存在*/
             if (typeof template === 'string') {
-                // 在template里面也可以这样配置
-                // template:"#app"
+                /* 在template里面也可以这样配置 */
+                /* template:"#app"  如果这样配置, 判断第一个字符是#, 过选择器查询dom元素*/
                 if (template.charAt(0) === '#') {
                     template = idToTemplate(template);
-                    /* istanbul ignore if */
                     if (!template) {
                         warn(
                             ("Template element not found or is empty: " + (options.template)),
@@ -111,7 +107,7 @@ Vue.prototype.$mount = function (el, hydrating) {
                         );
                     }
                 }
-            } else if (template.nodeType) {  // 直接配置了节点对象
+            } else if (template.nodeType) {  /*直接配置了dom节点对象*/
                 template = template.innerHTML;
             } else {
                 {
@@ -119,22 +115,23 @@ Vue.prototype.$mount = function (el, hydrating) {
                 }
                 return this
             }
-        } else if (el) {  //没有设置 template, 就通过el元素来获取
+        } else if (el) {  /*没有设置 template, 就通过el元素来获取*/
             template = getOuterHTML(el);
         }
         ...
     }
-    //idToTemplate 函数的实现, 通过id来获取el的innerHTML
+    /*idToTemplate 函数的实现, 通过id来获取el的innerHTML*/
     var idToTemplate = cached(function (id) {
-        var el = query(id) // 获取当前的dom
+        /*根据id获取dom*/
+        var el = query(id)
         return el && el.innerHTML
     });
     //
     function getOuterHTML(el) {
-        if (el.outerHTML) {  // 判断是否有外部元素
+        if (el.outerHTML) {
             return el.outerHTML
-        } else {   //如果没有就创建一个,svg就没有outerHTML
-            // 创建一个div标签把自己包裹起来
+        } else {   /*如果没有就创建一个,svg就没有outerHTML*/
+           /* 创建一个div标签把自己包裹起来 */
             var container = document.createElement('div');
             container.appendChild(el.cloneNode(true)); //cloneNode 传入true, 把子节点也拷贝了
             return container.innerHTML
