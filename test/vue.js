@@ -4898,11 +4898,12 @@
     /*  */
 
     var uid$3 = 0;
-
+    /*initMixin主要是对对options选型的规范和合并*/
     function initMixin (Vue) {
         Vue.prototype._init = function (options) {
             var vm = this;
             // a uid
+            /* 统计 Vue被new了多少次*/
             vm._uid = uid$3++;
 
             var startTag, endTag;
@@ -4914,6 +4915,7 @@
             }
 
             // a flag to avoid this being observed
+            /*设置了一个标识, 避免被vm实例加入响应式系统 */
             vm._isVue = true;
             // merge options
             if (options && options._isComponent) {
@@ -4934,14 +4936,14 @@
             }
             // expose real self
             vm._self = vm;
-            initLifecycle(vm);
-            initEvents(vm);
-            initRender(vm);
-            callHook(vm, 'beforeCreate');
+            initLifecycle(vm);  /* 初始时生命周期*/
+            initEvents(vm); /* 初始化事件*/
+            initRender(vm);  /* 渲染页面 */
+            callHook(vm, 'beforeCreate');   /*生命周期钩子函数beforeCreate被的调用*/
             initInjections(vm); // resolve injections before data/props
-            initState(vm);
+            initState(vm);    /*初始化状态 props data computed watch methods*/
             initProvide(vm); // resolve provide after data/props
-            callHook(vm, 'created');
+            callHook(vm, 'created');   /*生命周期钩子函数created被的调用*/
 
             /* istanbul ignore if */
             if (config.performance && mark) {
@@ -5011,12 +5013,16 @@
         }
         return modified
     }
-
+    /*Vue的构造函数,options是我们在new Vue({}) 传递进来的一个对象*/
     function Vue (options) {
-        if (!(this instanceof Vue)
-        ) {
+        /*进行了Vue函数调用的安全监测*/
+        /*Vue的构造函数只能通过new Vue()来调用*/
+        /*不能通过 Vue()调用, 这样调用 this指向window*/
+        if (!(this instanceof Vue)) {
+            /*封装了warn函数,  用于报错提示信息等*/
             warn('Vue is a constructor and should be called with the `new` keyword');
         }
+        /* 调用原型上的_init方法, 进行初始化  */
         this._init(options);
     }
 

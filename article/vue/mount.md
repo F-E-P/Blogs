@@ -1,4 +1,4 @@
-##  vm.$mount 深入理解Vue的渲染流程
+# vm.$mount 深入理解Vue的渲染流程
 
 $mount的实现跟构建方式(webpack的vue-loader)有关系,也和平台有关系(weex),
 下面的代码只分析了纯前端浏览器环境下的$mount的实现
@@ -14,17 +14,17 @@ $mount的实现跟构建方式(webpack的vue-loader)有关系,也和平台有关
     }).$mount("#app")
     以上两种方式会触发$mount函数
 ```
-以下是Vue.$mount函数独立构建时的渲染的流程图
+以下是Vue.$mount函数独立构建时的渲染的流程图:
 
 ![](/images/vue/$mount.jpg)
 
-以代码的形式来来展示
+以代码的形式来来展示:
 
 模板字符串 => render函数 => 虚拟dom => 真实的dom节点
 
 ![](/images/vue/$mount1.jpg)
 
-开始分析 $mount, 以下是$mount的源码, 省略了部分代码
+开始分析 $mount, 以下是$mount的源码, 省略了部分代码:
 ```javascript
 /*缓存不带编译功能的$mount函数, 在下面$mount最后调用*/
 var mount = Vue.prototype.$mount;
