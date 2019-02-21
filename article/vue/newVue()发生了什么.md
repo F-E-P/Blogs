@@ -1,7 +1,4 @@
-#  Vue. new Vue()发生了什么和mergeOptions选项合并函数的分析
-
-##  Vue.js运行的机制
-
+#  Vue. new Vue()发生了什么
 
 ## new Vue()发生了什么
 经常书写下面的代码:
@@ -34,7 +31,7 @@
 - 调用了自身原生的的_init函数
 
 下面是Vue原型上的_init函数的代码
-```
+```JavaScript
 var uid$3 = 0; /* 用于统计Vue构造函数被new多少次*/
 /*initMixin主要是对对options选型的规范和合并*/
 function initMixin (Vue) {
