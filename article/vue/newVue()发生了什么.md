@@ -1,6 +1,5 @@
 #  Vue. new Vue()发生了什么
 
-## new Vue()发生了什么
 经常书写下面的代码:
 ```JavaScript
   new Vue({
@@ -33,7 +32,7 @@
 下面是Vue原型上的_init函数的代码
 ```JavaScript
 var uid$3 = 0; /* 用于统计Vue构造函数被new多少次*/
-/*initMixin主要是对对options选型的规范和合并*/
+/*initMixin主要是对对options选项的合并和规范*/
 function initMixin (Vue) {
     Vue.prototype._init = function (options) {
         var vm = this;
@@ -58,6 +57,7 @@ function initMixin (Vue) {
             // internal component options needs special treatment.
             initInternalComponent(vm, options);
         } else {
+            /*选项合并的入口代码*/
             vm.$options = mergeOptions(
                 resolveConstructorOptions(vm.constructor),
                 options || {},
@@ -66,7 +66,7 @@ function initMixin (Vue) {
         }
         /* istanbul ignore else */
         {
-            initProxy(vm); /*初始化Proxy, 检测Proxy函数是否支持等*/
+            initProxy(vm); /*初始化Proxy, 检测ES6的Proxy函数是否支持等*/
         }
         // expose real self
         vm._self = vm;
