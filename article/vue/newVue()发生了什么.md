@@ -1,5 +1,5 @@
-#  Vue. new Vue()发生了什么
-
+#  Vue. new Vue()内部运行机制
+Vue.js的init过程,是比较复杂的.
 经常书写下面的代码:
 ```JavaScript
   new Vue({

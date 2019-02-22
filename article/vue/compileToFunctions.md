@@ -1,6 +1,6 @@
 ## template模板是如何编译成render渲染函数的流程分析
 在上一节分析$mount函数挂载的过程
-```
+```javascript
 var ref = compileToFunctions(template, {
                     outputSourceRange: "development" !== 'production',
                     shouldDecodeNewlines: shouldDecodeNewlines,
@@ -93,7 +93,7 @@ function createCompilerCreator(baseCompile) {
 }
 ```
 接下来分析createCompilerCreator是如何被调用的
-```
+```javascript
 /*
  *  编译器的创建者
  *  这个函数的只要作用:
@@ -122,7 +122,7 @@ baseCompile函数是整个编译过程的核心代码, 当做参数传递给crea
 传递给baseCompile函数,进行parse,optimize,generate(后面的小节会分析).
 
 createCompilerCreator函数的返回值createCompiler函数,需要接受baseOptions
-```
+```javascript
 /*一些基础的配置*/
 var baseOptions = {
         expectHTML: true,
@@ -138,7 +138,7 @@ var baseOptions = {
     };
 ```
 createCompiler函数最终的返回值是一个对象
-```
+```javascript
 return {
      compile: compile, /*函数*/
      compileToFunctions: createCompileToFunctionFn(compile) /*函数*/
@@ -146,7 +146,7 @@ return {
 ```
 最终发现在$mount里面compileToFunctions函数, 最终就是createCompileToFunctionFn(compile),
 进行编译
-```
+```javascript
  /*把函数字符串编译成fn*/
 /*compile 是一个函数 */
 function createCompileToFunctionFn(compile) {
@@ -261,7 +261,7 @@ function createCompileToFunctionFn(compile) {
 }
 ```
 createFunction的代码实现
-```
+```javascript
  /*这个函数的作用: 把函数体字符串, 生成一个函数*/
 function createFunction(code, errors) {
     try {
