@@ -14,26 +14,19 @@
 </body>
 </html>
 <script>
-    const compA = {
-        created(){
-            console.log("子组件")
-        },
-        template:"<div>我是子组件</div>"
-    }
-    const vm = new Vue({
-        el: "#app",
-        created:[
-            function () {
-                console.log("1")
+
+    let  p = Vue.extend({
+        directive:{
+            test1:{
+                bind:function () {
+                    console.log("v-test1")
+                }
             },
-            function () {
-                console.log("2")
-            },
-            function () {
-                console.log("3")
+            test2:function () {
+                console.log("v-test1")
             }
-        ]
+        }
+
     })
-    console.log(vm.$options)
 
 </script>

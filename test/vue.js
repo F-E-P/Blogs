@@ -1494,6 +1494,7 @@
             while (i--) {
                 val = props[i];
                 if (typeof val === 'string') {
+                    /*将中横线- 转为了驼峰*/
                     name = camelize(val);
                     res[name] = {type: null};
                 } else {
