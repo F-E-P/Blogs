@@ -1,4 +1,10 @@
 ## mergeOptions选项合并策略
+mergeOptions的主要作用:
+- 对options进行规范
+- options的合并, 默认策略和自定义策略
+
+合并策略目的:围绕着组件和子类来进行限制的
+
 ```javascript
 const vm= new Vue({
         el:"#app",
@@ -81,7 +87,7 @@ function mergeOptions(parent, child, vm) {
             parent = mergeOptions(parent, child.extends, vm);
         }
         if (child.mixins) {
-            /*递归调用把emixins合并到parent上*/
+            /*递归调用把mixins合并到parent上*/
             for (var i = 0, l = child.mixins.length; i < l; i++) {
                 parent = mergeOptions(parent, child.mixins[i], vm);
             }
@@ -112,6 +118,9 @@ function mergeOptions(parent, child, vm) {
 - 检查组件的命名是否规范
 - 规范化Props,Inject,Directives
 - Vue选项的合并
+mergeOptions的第三个参数vm, 用于区分根实例还是子组件. 在上面的代码中, 传递了vm参数,
+mergeOptions在另一个也被调用了,在Vue.extend()这个函数中, 没有传递vm参数
+
 
 ##### 检查组件的命名是否规范checkComponents(child)
 ```javascript
@@ -171,9 +180,10 @@ var isReservedTag = function (tag) {
             mergeField(key);
         }
     }
-    /*对parent, child的key字段进行和合并,采取了不同的策略*/
+     /*对parent, child的key字段进行和合并,采取了不同的策略*/
      function mergeField(key) {
          var strat = strats[key] || defaultStrat;
+         /*把 strat(parent[key], child[key], vm, key)函数的返回值给对应的options[key]*/
          options[key] = strat(parent[key], child[key], vm, key);
      }
      return options
@@ -201,7 +211,7 @@ config.optionMergeStrategies 是一个合并选项的策略对象，这个对象
 el, data, watch等进行了合并的限制
 
 
-在看看defaultStrat的源码实现, childVal === undefined直接使用parentparentVal
+在看看defaultStrat函数的实现, childVal === undefined直接使用parentVal
 ```javascript
  var defaultStrat = function (parentVal, childVal) {
         return childVal === undefined? parentVal : childVal

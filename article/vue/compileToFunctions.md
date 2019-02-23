@@ -16,7 +16,7 @@ var ref = compileToFunctions(template, {
     第三个参数:vm的实例
 */
 ```
-可以看出compileToFunctions函数是把template编译成render函数,在反向查看这个函数的由来
+可以看出compileToFunctions函数是把template编译成render函数,在查看这个函数的
 最终入口是createCompilerCreator函数,可以看出编译入口文件这么复杂, 原因是Vue.js在不同的
 平台下的编译.
 ```javascript
@@ -144,7 +144,7 @@ return {
      compileToFunctions: createCompileToFunctionFn(compile) /*函数*/
 }
 ```
-最终发现在$mount里面compileToFunctions函数, 最终就是createCompileToFunctionFn(compile),
+最终发现在$mount里面compileToFunctions函数, 最终就是在createCompileToFunctionFn(compile),
 进行编译
 ```javascript
  /*把函数字符串编译成fn*/
@@ -272,6 +272,9 @@ function createFunction(code, errors) {
     }
 }
 ```
+createFunction函数通过new Function把函数字符串,定义成一个render函数
+
+
 整个编译阶段是如此复杂, 原因就在于不同的平台下, 进行不同的代码编译
 至此 整个的编译最核心的过程:
 1. parse  把模板编译成AST, 在不同的平台的下生成AST都是一样的

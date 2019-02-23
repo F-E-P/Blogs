@@ -5230,6 +5230,7 @@
             Sub.prototype = Object.create(Super.prototype);
             Sub.prototype.constructor = Sub;
             Sub.cid = cid++;
+            /*进行选项的合并 mergeOptions没有传递vm, 当做子类来处理 */
             Sub.options = mergeOptions(
                 Super.options,
                 extendOptions
