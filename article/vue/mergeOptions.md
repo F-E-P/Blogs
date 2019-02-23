@@ -1,7 +1,7 @@
 ## mergeOptions选项合并策略
 mergeOptions的主要作用:
-- 对options进行规范
-- options的合并, 默认策略和自定义策略
+- 对 options 进行规范
+- options 的合并, 默认策略和自定义策略
 
 合并策略目的:围绕着组件和子类来进行限制的
 
@@ -17,7 +17,7 @@ const vm= new Vue({
 
 ![](/images/vue/1.vue.jpg)
 
-Vue.js在初始化的时候, 有些默认的配置,initGlobalAPI函数为Vue.options,进行了一些初始化的默认配置
+Vue.js在初始化的时候, 有些默认的配置, initGlobalAPI 函数为 Vue.options, 进行了一些初始化的默认配置
 ```javascript
     function initGlobalAPI(Vue) {
     ...
@@ -35,7 +35,7 @@ Vue.js在初始化的时候, 有些默认的配置,initGlobalAPI函数为Vue.opt
 }
 ```
 
-在上一节vm._init函数中,调用了mergeOptions函数, 进行选项的合并
+在上一节 vm._init 函数中,调用了 mergeOptions 函数, 进行选项的合并
 ```javascript
 function initMixin(Vue) {
     Vue.prototype._init = function (options) {
@@ -58,7 +58,7 @@ function initMixin(Vue) {
     };
 }
 ```
-接下来看mergeOptions函数的实现:
+接下来看 mergeOptions 函数的实现:
 ```javascript
 /* 用于把parent,child进行合并 */
 function mergeOptions(parent, child, vm) {
@@ -114,12 +114,12 @@ function mergeOptions(parent, child, vm) {
     return options
 }
 ```
-通过分析mergeOptions函数, 主要做了一下几件事情:
+通过分析 mergeOptions 函数, 主要做了一下几件事情:
 - 检查组件的命名是否规范
-- 规范化Props,Inject,Directives
-- Vue选项的合并
-mergeOptions的第三个参数vm, 用于区分根实例还是子组件. 在上面的代码中, 传递了vm参数,
-mergeOptions在另一个也被调用了,在Vue.extend()这个函数中, 没有传递vm参数
+- 规范化 Props,Inject,Directives
+- Vue 选项的合并
+mergeOptions的第三个参数 vm, 用于区分根实例还是子组件. 在上面的代码中, 传递了vm参数,
+mergeOptions在另一个也被调用了,在 Vue.extend() 这个函数中, 没有传递 vm 参数
 
 
 ##### 检查组件的命名是否规范checkComponents(child)
@@ -130,7 +130,7 @@ mergeOptions在另一个也被调用了,在Vue.extend()这个函数中, 没有�
     }
 }
 ```
-将child的传递进来, 进行遍历, 获取到每个key. 将每个key作为参数传递给
+将 child 的传递进来, 进行遍历, 获取到每个 key. 将每个 key 作为参数传递给
 validateComponentName(key);
 ```javascript
 function validateComponentName(name) {
@@ -148,19 +148,19 @@ function validateComponentName(name) {
     }
 }
 ```
-isBuiltInTag函数, 不能是slot,component Vue内置组件的名字
+isBuiltInTag 函数, 不能是 slot,component Vue 内置组件的名字
 ```javascript
 var isBuiltInTag = makeMap('slot,component', true);
 ```
-isReservedTag函数, 组件的名字不能为html标签的名字和svg标签的名字
+isReservedTag 函数, 组件的名字不能为html标签的名字和svg标签的名字
 ```
 var isReservedTag = function (tag) {
     return isHTMLTag(tag) || isSVG(tag)
 };
 ```
 
-从validateComponentName分析得出组件的命名规范应该满足一下的要求:
-- /^[a-zA-Z][\-\.0-9_/.test(name) 为true
+从 validateComponentName 分析得出组件的命名规范应该满足一下的要求:
+- /^[a-zA-Z][\-\.0-9_/.test(name) 为 true
 - isBuiltInTag(name) 或者 config.isReservedTag(name) 为 false
 
 ##### Vue选项的合并
@@ -189,15 +189,15 @@ var isReservedTag = function (tag) {
      return options
 }
 ```
-上面的代码, 最终返回一个options,  先对parent进行遍历, 在对child进行遍历, 在遍历child时,
-多了一层的限制, 对于相同的key, 如果parent已经进mergeField, child,就不在进行遍历.
+上面的代码, 最终返回一个 options,  先对 parent 进行遍历, 在对 child 进行遍历, 在遍历 child 时,
+多了一层的限制, 对于相同的key, 如果 parent 已经进 mergeField, child,就不在进行遍历.
 
-mergeField函数:
-- 先去检测strats[key], 对该key是否有自定义的合并策略, 如果有就直接使用,像el,watch,data等都进行自定义的合并策略
+mergeField 函数:
+- 先去检测 strats[key], 对该 key 是否有自定义的合并策略, 如果有就直接使用,像 el, watch, data等都进行自定义的合并策略
 - 如果没有自定义的策略, 就是用是默认的策略合并
 
 
-对于strats[key]函数, 什么是strats?
+对于 strats[key] 函数, 什么是 strats?
 ```javascript
 /**
  * Option overwriting strategies are functions that handle
@@ -211,7 +211,7 @@ config.optionMergeStrategies 是一个合并选项的策略对象，这个对象
 el, data, watch等进行了合并的限制
 
 
-在看看defaultStrat函数的实现, childVal === undefined直接使用parentVal
+在看看 defaultStrat 函数的实现, childVal === undefined 直接使用 parentVal
 ```javascript
  var defaultStrat = function (parentVal, childVal) {
         return childVal === undefined? parentVal : childVal

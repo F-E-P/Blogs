@@ -1,5 +1,5 @@
 #  Vue. new Vue()内部运行机制
-Vue.js的init过程,是比较复杂的.
+Vue.js的 init 过程,是比较复杂的.
 经常书写下面的代码:
 ```JavaScript
   new Vue({
@@ -25,11 +25,11 @@ Vue.js的init过程,是比较复杂的.
     }
 ```
 从上面的代码可以看出:
-- 对Vue构造函数的进行限制, 只有通过new Vue()才可调用,
-而直接调用Vue(),里面的this会指向window会有报错提醒
-- 调用了自身原生的的_init函数
+- 对Vue构造函数的进行限制, 只有通过 new Vue() 才可调用,
+而直接调用 Vue(),里面的 this 会指向 window 会有报错提醒
+- 调用了自身原生的的 _init 函数
 
-下面是Vue原型上的_init函数的代码
+下面是Vue原型上的 _init 函数的代码
 ```JavaScript
 var uid$3 = 0; /* 用于统计Vue构造函数被new多少次*/
 /*initMixin主要是对对options选项的合并和规范*/
@@ -92,6 +92,6 @@ function initMixin (Vue) {
     };
 }
 ```
-_init函数的流程:
-- 最重要的事情mergeOptions()函数, 进行选项的合并
+_init 函数的流程:
+- 最重要的事情 mergeOptions() 函数, 进行选项的合并
 - 初始化页面, 初始化事件, 渲染页面, 初始化 data、props、computed、watcher 等等
