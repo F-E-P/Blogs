@@ -1,4 +1,4 @@
-.DS_Store
+﻿.DS_Store
 node_modules
 /dist
 
@@ -9,7 +9,7 @@ node_modules
 # 忽略mock数据
 public/mock
 # 忽略测试文件夹
-test
+/test
 
 # Log files
 npm-debug.log*

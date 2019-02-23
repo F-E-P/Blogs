@@ -213,7 +213,7 @@ el, data, watch等进行了合并的限制
 
 在看看 defaultStrat 函数的实现, childVal === undefined 直接使用 parentVal
 ```javascript
- var defaultStrat = function (parentVal, childVal) {
-        return childVal === undefined? parentVal : childVal
-    };
+var defaultStrat = function (parentVal, childVal) {
+    return childVal === undefined? parentVal : childVal
+};
 ```

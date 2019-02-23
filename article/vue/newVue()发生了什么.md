@@ -1,4 +1,12 @@
 #  Vue. new Vue()内部运行机制
+
+![](/images/vue/vue_base.jpg)
+ 来自官网的一张图,整体流程:
+ - new Vue()时, init 初始化过程
+ - compile() 编译到 render 渲染函数
+ - 响应式系统
+
+
 Vue.js的 init 过程,是比较复杂的.
 经常书写下面的代码:
 ```JavaScript

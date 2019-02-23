@@ -9,23 +9,31 @@
 
 <body>
 <div id="app">
-    {{test}}
     <comp-a></comp-a>
 </div>
 </body>
 </html>
 <script>
     const compA = {
-        el: "#app"
+        created(){
+            console.log("子组件")
+        },
+        template:"<div>我是子组件</div>"
     }
     const vm = new Vue({
         el: "#app",
-        data: {
-            test: "这是一个测试"
-        },
-        components: {
-            "comp-a" : compA
-        }
+        created:[
+            function () {
+                console.log("1")
+            },
+            function () {
+                console.log("2")
+            },
+            function () {
+                console.log("3")
+            }
+        ]
     })
+    console.log(vm.$options)
 
 </script>
