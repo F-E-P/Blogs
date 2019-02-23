@@ -1,4 +1,4 @@
-#  Vue. new Vue()内部运行机制
+#  Vue.js  new Vue()内部运行机制
 
 ![](/images/vue/vue_base.jpg)
  来自官网的一张图,整体流程:
