@@ -15,18 +15,12 @@
 </html>
 <script>
 
-    let  p = Vue.extend({
-        directive:{
-            test1:{
-                bind:function () {
-                    console.log("v-test1")
-                }
-            },
-            test2:function () {
-                console.log("v-test1")
-            }
-        }
-
-    })
+   new Vue({
+       el:"#app",
+       template:"<div> {{ a }}</div>",
+       data:{
+           message:"hello vue"
+       }
+   })
 
 </script>

@@ -1,6 +1,7 @@
 ﻿.DS_Store
 node_modules
 /dist
+/test
 
 # local env files
 .env.local
@@ -8,8 +9,6 @@ node_modules
 
 # 忽略mock数据
 public/mock
-# 忽略测试文件夹
-/test
 
 # Log files
 npm-debug.log*

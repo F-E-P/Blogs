@@ -22,6 +22,7 @@ Vue.js在初始化的时候, 有些默认的配置, initGlobalAPI 函数为 Vue.
     function initGlobalAPI(Vue) {
     ...
     Vue.options = Object.create(null);
+    /*对资源assets的默认初始化*/
     ASSET_TYPES.forEach(function (type) {
         Vue.options[type + 's'] = Object.create(null);
     });
@@ -49,7 +50,7 @@ function initMixin(Vue) {
             initInternalComponent(vm, options);
         } else {
             /*
-            * 在这个调用了mergeOptions
+            * 在这个调用了mergeOptions函数
             * 获取resolveConstructorOptions(vm.constructor)返回值
             */
             vm.$options = mergeOptions(resolveConstructorOptions(vm.constructor), options || {}, vm)

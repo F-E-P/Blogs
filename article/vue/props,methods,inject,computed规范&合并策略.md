@@ -14,7 +14,7 @@
     }
  }
 ```
-在 mergeOptions 函数里面, 可以看到 对 props 的规范检测, 进行统一的规范化处理
+初始化过程, 在 mergeOptions 函数里面, 可以看到对 props 的规范检测, 进行统一的规范化处理
 ```
 normalizeProps(child, vm);
 ```
@@ -123,7 +123,7 @@ if (isPlainObject(props)) {
 ```
 最终将 props 统一为对象
 
-camelize 的作用把带有中横线 props 命名转为驼峰驼峰命名
+camelize 函数的作用把带有中横线 props 命名转为驼峰驼峰命名
 ```javascript
 var camelizeRE = /-(\w)/g;
 var camelize = cached(function (str) {
@@ -144,6 +144,8 @@ Vue.component('blog-post', {
 <!-- 在 HTML 中是 kebab-case 的 -->
 <blog-post post-title="hello!"></blog-post>
 ```
+在 HTML 中可以 post-title 可以带中横线(推荐这种写法, 符合 HTML 属性规范), 在props规范化中,
+将中横线-替换掉, 变成驼峰的方式
 ####  directives 规范化
 在我们定义指令的时候, 可以有不同的写法
 ```javascript

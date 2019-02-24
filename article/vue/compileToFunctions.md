@@ -1,5 +1,5 @@
 ## template模板是如何编译成render渲染函数的流程分析
-在上一节分析$mount函数挂载的过程
+在上一节分析 $mount 函数挂载的过程
 ```javascript
 var ref = compileToFunctions(template, {
                     outputSourceRange: "development" !== 'production',
@@ -16,8 +16,8 @@ var ref = compileToFunctions(template, {
     第三个参数:vm的实例
 */
 ```
-可以看出compileToFunctions函数是把template编译成render函数,在查看这个函数的
-最终入口是createCompilerCreator函数,可以看出编译入口文件这么复杂, 原因是Vue.js在不同的
+可以看出 compileToFunctions 函数是把 template 编译成 render 函数,在查看这个函数的
+最终入口是 createCompilerCreator 函数,可以看出编译入口文件这么复杂, 原因是Vue.js在不同的
 平台下的编译.
 ```javascript
  /* 生成编译器*/
@@ -92,7 +92,7 @@ function createCompilerCreator(baseCompile) {
     }
 }
 ```
-接下来分析createCompilerCreator是如何被调用的
+接下来分析 createCompilerCreator 是如何被调用的
 ```javascript
 /*
  *  编译器的创建者
@@ -117,11 +117,11 @@ var createCompiler = createCompilerCreator(function baseCompile(template, option
     }
 });
 ```
-baseCompile函数是整个编译过程的核心代码, 当做参数传递给createCompilerCreator.
-在createCompilerCreator函数里面, 经过options最终的合并成finalOptions,
-传递给baseCompile函数,进行parse,optimize,generate(后面的小节会分析).
+baseCompile 函数是整个编译过程的核心代码, 当做参数传递给 createCompilerCreator.
+在createCompilerCreator 函数里面, 经过 options 最终的合并成 finalOptions,
+传递给 baseCompile 函数,进行 parse, optimize, generate (后面的小节会分析).
 
-createCompilerCreator函数的返回值createCompiler函数,需要接受baseOptions
+createCompilerCreator 函数的返回值 createCompiler 函数,需要接受 baseOptions
 ```javascript
 /*一些基础的配置*/
 var baseOptions = {
@@ -137,14 +137,14 @@ var baseOptions = {
         staticKeys: genStaticKeys(modules$1)
     };
 ```
-createCompiler函数最终的返回值是一个对象
+createCompiler 函数最终的返回值是一个对象
 ```javascript
 return {
      compile: compile, /*函数*/
      compileToFunctions: createCompileToFunctionFn(compile) /*函数*/
 }
 ```
-最终发现在$mount里面compileToFunctions函数, 最终就是在createCompileToFunctionFn(compile),
+最终发现在 $mount 里面 compileToFunctions 函数, 最终就是在 createCompileToFunctionFn(compile),
 进行编译
 ```javascript
  /*把函数字符串编译成fn*/
@@ -260,7 +260,7 @@ function createCompileToFunctionFn(compile) {
     }
 }
 ```
-createFunction的代码实现
+createFunction 的代码实现
 ```javascript
  /*这个函数的作用: 把函数体字符串, 生成一个函数*/
 function createFunction(code, errors) {

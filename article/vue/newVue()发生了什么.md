@@ -35,7 +35,7 @@ Vue.js的 init 过程,是比较复杂的.
 从上面的代码可以看出:
 - 对Vue构造函数的进行限制, 只有通过 new Vue() 才可调用,
 而直接调用 Vue(),里面的 this 会指向 window 会有报错提醒
-- 调用了自身原生的的 _init 函数
+- 调用了自身原型上的 _init 函数
 
 下面是Vue原型上的 _init 函数的代码
 ```JavaScript
