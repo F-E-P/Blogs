@@ -5073,8 +5073,8 @@
             initState(vm);
             /*初始化状态 props data computed watch methods*/
             initProvide(vm); // resolve provide after data/props
-            callHook(vm, 'created');
             /*生命周期钩子函数created被的调用*/
+            callHook(vm, 'created');
 
             /* istanbul ignore if */
             if (config.performance && mark) {

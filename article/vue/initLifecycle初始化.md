@@ -13,10 +13,10 @@ const vm = new Vue({
 })
 console.log(vm)
 ```
-在控制打印 vm 时, 可以看到这两个属性:$parent, $chilren, 在官网看到这个两个的属性的解释
+在控制打印 vm 时, 可以看到这两个属性:$parent, $chilren
 
 ![](/images/vue/6.vue.jpg)
-
+在官网看到这个两个的属性的解释
 - $parent   父实例，如果当前实例有的话。
 - $chilren  当前实例的直接子组件
 
@@ -54,8 +54,10 @@ var Transition = {
     return rawChild
 }
 ```
-从两个抽象组件中, 可以看出,抽象组件有一个共同的表示
-```
+从两个抽象组件中, 可以看出,抽象组件有一个共同的标识
+
+```javascript
+
 abstract: true
 ```
 
@@ -65,11 +67,14 @@ abstract: true
 
 在 _init 函数过程, 调用了 initLifecycle(vm),
 ```javascript
+
 vm._self = vm;
 initLifecycle(vm);
 ```
 initLifecycle() 函数的具体代码如下:
-```
+
+```javascript
+
 function initLifecycle(vm) {
     /*获取到options, options已经在mergeOptions中最终处理完毕*/
     var options = vm.$options;
@@ -105,15 +110,19 @@ function initLifecycle(vm) {
 从上面的 if 开始, 成立的条件是: 当前组件有 parent 属性, 并且是非抽象组件. 才进入 if 语句.
 然后通过 while 循环.向上继续查到 第一个非抽象组件. 然后做了两件事:
 - 将当前的 vm 添加到查找到的第一个非抽象父级组件 $children 中
-```
+
+```javascript
+
  parent.$children.push(vm);
 ```
 - 将当前的组件的$parent,指向查找到的第一个非抽象组件
-```
+
+```javascript
+
 vm.$parent = parent;
 ```
 
-后面的代码给vm设置了一些属性
+之后的代码给vm设置了一些属性
 
 
 

@@ -9,20 +9,23 @@
 
 <body>
 <div id="app">
-    <comp-a></comp-a>
 </div>
 </body>
 </html>
 <script>
-    const compA = {
-        template: "<div>{{'我是compA'}}</div>"
-    }
     const vm = new Vue({
         el: "#app",
-        components: {
-            "comp-a": compA
+        props:["a"],
+        data:{
+            b:"1"
+        },
+        methods:{
+            test(){
+                console.log(this.a)
+                console.log(this.b)
+            }
         }
     })
-    console.log(vm)
+    console.log(vm.test())
 
 </script>
