@@ -14,13 +14,15 @@
 </body>
 </html>
 <script>
-
-   new Vue({
-       el:"#app",
-       template:"<div> {{ a }}</div>",
-       data:{
-           message:"hello vue"
-       }
-   })
+    const compA = {
+        template: "<div>{{'我是compA'}}</div>"
+    }
+    const vm = new Vue({
+        el: "#app",
+        components: {
+            "comp-a": compA
+        }
+    })
+    console.log(vm)
 
 </script>

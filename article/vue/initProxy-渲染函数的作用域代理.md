@@ -21,7 +21,7 @@ if (hasProxy) {
 initProxy函数的主要目的: 通过vm._renderProxy 代理 vm 实例, 根据不同的条件, 生成 Proxy 的 handlers 拦截行为
 vm._renderProxy 在 render 函数被调用的时候, 当做参数被传递进入
 
-```
+```javascript
 vnode = render.call(vm._renderProxy, vm.$createElement)
 ```
 render使用call调用, 上下文为vm._renderProxy, 这部分会在后面的小节讲到
