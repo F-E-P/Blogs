@@ -2,7 +2,7 @@
 
 在 vm._init 中 调用调了  initState
 ```javascript
- initState(vm);
+initState(vm);
 ```
  initState(vm) 源码实现具体如下:
  ```javascript
@@ -56,7 +56,7 @@ function initData(vm) {
         ? getData(data, vm)
          /如果不是一个函数,就返回data或者{}空对象*/
         : data || {};
-        /*data 此时已经获取到 getData的会返回值 */
+        /*data 此时已经获取到, 是对象  getData的会返回值 */
     if (!isPlainObject(data)) {
         data = {};
         warn(
@@ -103,7 +103,9 @@ initData() 函数整理流程:
 
 ###### 获取data函数的返回值
 ```javascript
+ /*获取到data,此时的data已经是一个函数*/
 var data = vm.$options.data;
+ /*检测data是否是一个函数.如果是通过getData获取到data的返回值.*/
 data = vm._data = typeof data === 'function'
     ? getData(data, vm)
     : data || {};
@@ -119,7 +121,9 @@ if (!isPlainObject(data)) {
 ```
 通过 vm.$options.data 获取到 data,  检测 data 是否是一个函数,
 - data是一个函数,调用getData()函数
-- 不是一个函数,返回 data 或者 {} 对象. 将最终的结果 赋值给 vm._data 变量
+- 不是一个函数,返回 data 或者 {} 对象.
+
+将最终的结果 赋值给 vm._data 变量
 
 getData(data, vm)函数的实现:
 ```javascript
@@ -168,7 +172,7 @@ while (i--) {
             "Use prop default value instead.",
             vm
         );
-      /*检测key的名字不能以_或者$开头*/
+      /*检测key的名字不能以_或者$开头, Vue中有很多以_或者$开头的属性,避免造成混乱*/
     } else if (!isReserved(key)) {
         proxy(vm, "_data", key);
     }
@@ -180,21 +184,24 @@ props, methods里面每个属性的名字不能与data的key有相同的名字 �
 
 proxy(vm, "_data", key) 的实现:
 ```javascript
-/* 定义一个公共的实现 */
+/* 定义一个公共的实现, 在prosps, 和methods都会用到. */
 var sharedPropertyDefinition = {
-    enumerable: true,
-    configurable: true,
-    get: noop,
+    enumerable: true,  /*可以进行枚举*/
+    configurable: true,  /*可以进行删除属性*/
+    get: noop,  /*noop 是一个空函数, 常用套路*/
     set: noop
 };
 /* 如果代理vm代理 data , target是vm, sourceKey是data, key属性*/
 function proxy(target, sourceKey, key) {
+    /*对key进行get操作,设置sourceKey[key]*/
     sharedPropertyDefinition.get = function proxyGetter() {
         return this[sourceKey][key]
     };
+    /*对key进行set操作, 返回sourceKey[key]的值*/
     sharedPropertyDefinition.set = function proxySetter(val) {
         this[sourceKey][key] = val;
     };
+    /*使用Object.defineProperty对数据进行相关拦截的操作*/
     Object.defineProperty(target, key, sharedPropertyDefinition);
 }
 ```
@@ -207,10 +214,10 @@ function proxy(target, sourceKey, key) {
 
 设置vm.xxx 最终通过Object.defineProperty, 会触发 set钩子函数, 设置data属性里对应的key的值
 
-props 属性代理 和 methods的函数的代理也是一样的原理, 在此不再进行分析.
+vm 代理 props 属性 和 methods 的属性也是一样的原理, 在此不再进行分析.
 
 ###### 响应式系统入口
-在initState最后一行的代码:  真正的开启响应式系统
+在initData最后一行的代码:  真正的开启响应式系统
 
 ```javascript
   observe(data, true /* asRootData */);

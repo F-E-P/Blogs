@@ -15,17 +15,31 @@
 <script>
     const vm = new Vue({
         el: "#app",
-        props:["a"],
-        data:{
-            b:"1"
+        props: ["a"],
+        data: {
+            b: "1"
         },
-        methods:{
-            test(){
+        methods: {
+            test() {
                 console.log(this.a)
                 console.log(this.b)
             }
         }
     })
     console.log(vm.test())
+
+    /*用于依赖收集*/
+    let dep = []
+    let data={
+        test:"我是一个测试"
+    }
+    Object.defineProperty(data,"test",{
+        get(){
+            dep.forEach(fn=> fn())
+        },
+        set(){
+            dep.push(fn)
+        }
+    })
 
 </script>

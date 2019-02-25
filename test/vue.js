@@ -1023,10 +1023,12 @@
      * or the existing observer if the value already has one.
      */
     function observe(value, asRootData) {
+        /*value 是不是对象或者不是vNode的子类*/
         if (!isObject(value) || value instanceof VNode) {
             return
         }
         var ob;
+        /**/
         if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
             ob = value.__ob__;
         } else if (

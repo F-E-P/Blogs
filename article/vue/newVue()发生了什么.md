@@ -2,8 +2,8 @@
 
 ![](/images/vue/vue_base.jpg)
  来自官网的一张图,整体流程:
- - new Vue()时, init 初始化过程
- - compile() 编译到 render 渲染函数
+ - new Vue() 时, init 初始化过程
+ - compile()  模板编译到 render 渲染函数
  - 响应式系统
 
 
@@ -101,5 +101,5 @@ function initMixin (Vue) {
 }
 ```
 _init 函数的流程:
-- 最重要的事情 mergeOptions() 函数, 进行选项的合并
+- 最重要的事情 mergeOptions() 函数, 进行选项的合并和规范化
 - 初始化页面, 初始化事件, 渲染页面, 初始化 data、props、computed、watcher 等等
