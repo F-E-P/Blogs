@@ -955,9 +955,12 @@
      * collect dependencies and dispatch updates.
      */
     var Observer = function Observer(value) {
+        /*获取到传入过来的value值*/
         this.value = value;
         this.dep = new Dep();
+        /*统计被观察的数据的个数*/
         this.vmCount = 0;
+        /* 给value添加 __ob__的数据 */
         def(value, '__ob__', this);
         if (Array.isArray(value)) {
             if (hasProto) {
@@ -9451,6 +9454,7 @@
     var doctype = /^<!DOCTYPE [^>]+>/i;
     // #7298: escape - to avoid being pased as HTML comment when inlined in page
     var comment = /^<!\--/;
+    /*条件注释*/
     var conditionalComment = /^<!\[/;
 
     // Special Elements (can contain anything)
@@ -9481,21 +9485,23 @@
             return decodingMap[match];
         })
     }
-
+    // 模板字符串的词法的分析,词法分析
     function parseHTML(html, options) {
-        var stack = [];
+        var stack = []; /* 存储标签名 */
         var expectHTML = options.expectHTML;
         var isUnaryTag$$1 = options.isUnaryTag || no;
         var canBeLeftOpenTag$$1 = options.canBeLeftOpenTag || no;
-        var index = 0;
-        var last, lastTag;
-        while (html) {
+        var index = 0;  /*确定字符流测位置*/
+        var last, lastTag; /*last 未被解析的字符串*/
+        /*最终换成标准的json的数据*/
+        while (html) {  /* 循环检测 ,哪些是标签, 哪些是模板, 哪些是属性*/
             last = html;
             // Make sure we're not in a plaintext content element like script/style
             if (!lastTag || !isPlainTextElement(lastTag)) {
-                var textEnd = html.indexOf('<');
-                if (textEnd === 0) {
-                    // Comment:
+                var textEnd = html.indexOf('<');/*判断第一个<在html中出现的位置*/
+                if (textEnd === 0) {/* 大于0 小于0 等于0 */
+                    // Comment:   /*第一个字符是左尖括号*/
+                    // 注释comment的正则
                     if (comment.test(html)) {
                         var commentEnd = html.indexOf('-->');
 
@@ -9576,7 +9582,7 @@
                 if (options.chars && text) {
                     options.chars(text, index - text.length, index);
                 }
-            } else {
+            } else { /*在纯文本中*/
                 var endTagLength = 0;
                 var stackedTag = lastTag.toLowerCase();
                 var reStackedTag = reCache[stackedTag] || (reCache[stackedTag] = new RegExp('([\\s\\S]*?)(</' + stackedTag + '[^>]*>)', 'i'));
@@ -9611,7 +9617,7 @@
 
         // Clean up any remaining tags
         parseEndTag();
-
+        /*删除从指定位置的字符串*/
         function advance(n) {
             index += n;
             html = html.substring(n);
@@ -9801,12 +9807,8 @@
     /**
      * Convert HTML string to AST.
      */
-    function parse(
-        template,
-        options
-    ) {
+    function parse(template, options) {
         warn$2 = options.warn || baseWarn;
-
         platformIsPreTag = options.isPreTag || no;
         platformMustUseProp = options.mustUseProp || no;
         platformGetTagNamespace = options.getTagNamespace || no;
@@ -10804,16 +10806,16 @@
     /*  */
     /*TODO*/
     var baseOptions = {
-        expectHTML: true,
-        modules: modules$1,
-        directives: directives$1,
+        expectHTML: true,  /* 布尔类型 */
+        modules: modules$1, /* 对应着一个数组 描述编译编译的静态字符选项*/
+        directives: directives$1, /*对象 指令*/
         isPreTag: isPreTag,
-        isUnaryTag: isUnaryTag,
-        mustUseProp: mustUseProp,
-        canBeLeftOpenTag: canBeLeftOpenTag,
-        isReservedTag: isReservedTag,
-        getTagNamespace: getTagNamespace,
-        staticKeys: genStaticKeys(modules$1)
+        isUnaryTag: isUnaryTag, /* 函数 检测原始是否是单标签*/
+        mustUseProp: mustUseProp, /* 是否进行props绑定 */
+        canBeLeftOpenTag: canBeLeftOpenTag, /*是否补全闭合的标签*/
+        isReservedTag: isReservedTag, /* 是否为保留标签 */
+        getTagNamespace: getTagNamespace,/* 获取当前元素的命名空间 */
+        staticKeys: genStaticKeys(modules$1) /*根据编译器选项, 静态的链的字符串*/
     };
 
     /*  */
@@ -12091,8 +12093,12 @@
     }
 
     // #3663: IE encodes newlines inside attribute values while other browsers don't
+    /* 判断是否在浏览器环境 */
+    /* var inBrowser = typeof window !== 'undefined' */
+    /*监听所有的属性*/
     var shouldDecodeNewlines = inBrowser ? getShouldDecode(false) : false;
     // #6828: chrome encodes content in a[href]
+    /*只检测href*/
     var shouldDecodeNewlinesForHref = inBrowser ? getShouldDecode(true) : false;
 
     /*  */
@@ -12155,14 +12161,17 @@
                 * 第二个参数:一些配置选项, 用于配置编译器, 配置编译器的能力
                 * 第三个参数:this 就是vue的实例
                 * ref是一个对象{},里面有render
+                *
                 * */
                 var ref = compileToFunctions(template, {
                     outputSourceRange: "development" !== 'production',
+                    /* 换行 */
                     shouldDecodeNewlines: shouldDecodeNewlines,
                     shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
-                    /* 改变纯文本插入分隔符。*/
+                    /* 改变纯文本插入分隔符。默认是{{}}*/
                     delimiters: options.delimiters,
                     /*当设为 true 时，将会保留且渲染模板中的 HTML 注释。默认行为是舍弃它们。*/
+                    /* 默认为 false */
                     comments: options.comments
                 }, this);
                 var render = ref.render;

@@ -21,7 +21,7 @@ var ref = compileToFunctions(template, {
 平台下的编译.
 ```javascript
  /* 生成编译器*/
-/*baseCompile是一个函数,  进行把编译  */
+/*baseCompile是一个函数,  进行编译  */
 function createCompilerCreator(baseCompile) {
     /*返回一个createCompiler函数*/
     return function createCompiler(baseOptions) {
@@ -92,7 +92,7 @@ function createCompilerCreator(baseCompile) {
     }
 }
 ```
-接下来分析 createCompilerCreator 是如何被调用的
+接下来分析 baseCompile 函数
 ```javascript
 /*
  *  编译器的创建者

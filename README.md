@@ -11,7 +11,7 @@
 7.  [Vue.js初始化过程 - initLifecycle](/article/vue/initLifecycle初始化.md)
 8.  [Vue.js初始化过程 - initState-开启响应式系统入口](/article/vue/initState.md)
 9.  [Vue.js响应式系统 - observe 工厂函数 ](/article/vue/响应式系统入口.md)
-10.  [Vue.js响应式系统 - Observer 构造函数 ](/article/vue/Observer构造函数.md)
+10.  [Vue.js响应式系统 - Observer 构造函数 - 对象的深度观测 ](/article/vue/Observer构造函数.md)
 11.  [Vue.js模版编译 - vm.$mount 深入理解 Vue 的渲染流程](/article/vue/mount.md)
 12.  [Vue.js模板编译 - template 模板是如何编译成 render 渲染函数流程分析](/article/vue/compileToFunctions.md)
 
