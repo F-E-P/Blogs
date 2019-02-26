@@ -1,4 +1,4 @@
-## Observer构造函数
+## Observer 构造函数 - 响应对象的变化并深度观测
 
 ```javascript
 /**
@@ -143,7 +143,7 @@ if (property && property.configurable === false) {
     return
 }
 ```
-Object.getOwnPropertyDescriptor 获取还属性的描述对象, 判断是否有 property, 并且判断该对象是否可以进行配置.
+Object.getOwnPropertyDescriptor 获取该属性的描述对象, 判断是否有 property, 并且判断该对象是否可以进行配置.
 如果不能进行配置, 也就不能为改属性的定义
 
 继续分析

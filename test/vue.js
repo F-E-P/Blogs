@@ -909,13 +909,16 @@
     methodsToPatch.forEach(function (method) {
         // cache original method
         var original = arrayProto[method];
+        //function def(obj, key, val, enumerable)
         def(arrayMethods, method, function mutator() {
             var args = [], len = arguments.length;
+            /*通过循环, 将参数转为args数组 */
             while (len--) args[len] = arguments[len];
-
+            /*触发Array.prototype上方法*/
             var result = original.apply(this, args);
             var ob = this.__ob__;
             var inserted;
+            /*以下下三个比较特殊, 往数组里面添加数据, 如果加入又是一个数组呢?*/
             switch (method) {
                 case 'push':
                 case 'unshift':
@@ -925,11 +928,15 @@
                     inserted = args.slice(2);
                     break
             }
+            /*inserted为true,数组中加入了数据*/
             if (inserted) {
+                /* 继续添加数据到响应式系统 */
                 ob.observeArray(inserted);
             }
             // notify change
+            /*触发依赖更新*/
             ob.dep.notify();
+            /*返回result*/
             return result
         });
     });

@@ -93,7 +93,7 @@ function initMixin (Vue) {
             mark(endTag);
             measure(("vue " + (vm._name) + " init"), startTag, endTag);
         }
-
+         /*如果配置了el选项, 去挂载*/
         if (vm.$options.el) {
             vm.$mount(vm.$options.el);
         }

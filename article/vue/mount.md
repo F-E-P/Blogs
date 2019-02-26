@@ -27,6 +27,7 @@ $mount的实现跟构建方式(webpack的vue-loader)有关系,也和平台有关
 开始分析 $mount, 以下是$mount的源码, 省略了部分代码:
 ```javascript
 /*缓存不带编译功能的$mount函数, 在下面$mount最后调用*/
+/*进行缓存Vue.prototype.$mount*/
 var mount = Vue.prototype.$mount;
 Vue.prototype.$mount = function (el, hydrating) {
     /* $el元素的查找过程 */
